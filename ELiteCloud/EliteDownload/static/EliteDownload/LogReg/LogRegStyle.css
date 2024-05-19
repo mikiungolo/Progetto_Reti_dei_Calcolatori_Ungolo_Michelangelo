@@ -1,0 +1,52 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('sfondo.jpg'); 
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.form-container {
+    width: 30%; /* Ridimensionato per una migliore estetica */
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px; /* Aggiunto per bordi arrotondati */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunto ombra per profondità */
+}
+
+input[type="text"],
+input[type="email"], /* Aggiunto per uniformare lo stile dell'email */
+input[type="password"],
+button {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Aggiunto per bordi arrotondati */
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+a {
+    color: #5cb85c;
+}

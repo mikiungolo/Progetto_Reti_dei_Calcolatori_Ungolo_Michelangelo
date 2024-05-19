@@ -1,0 +1,65 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('driveBack.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.drive-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
+}
+
+.item {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.item:hover {
+    transform: scale(1.05);
+}
+
+.item .name {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.item .download {
+    display: none;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.item:hover .download {
+    display: block;
+}
+
+.folder:before {
+    content: '📁';
+    font-size: 30px;
+}
+
+.file:before {
+    content: '📄';
+    font-size: 30px;
+}

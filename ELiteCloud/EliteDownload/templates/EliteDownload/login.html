@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href=" {% static 'EliteDownload/LogReg/LogRegStyle.css' %} ">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form action="/login" method="post">
+                <h2>Login</h2>
+                <input type="text" placeholder="Username" name="username" required>
+                <input type="password" placeholder="Password" name="password" required>
+                <button type="submit">Accedi</button>
+                <p>Non hai un account? <a href="register.html">Registrati</a></p>
+            </form>
+        </div>
+        <div class="image-container">
+
+        </div>
+    </div>
+</body>
+</html>
