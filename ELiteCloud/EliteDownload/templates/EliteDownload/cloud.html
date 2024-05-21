@@ -8,6 +8,11 @@
     <link rel="stylesheet" href=" {% static 'EliteDownload/cloud/cloudStyle.css' %} ">
 </head>
 <body>
+    <nav class="user">
+        <span> Loggato come {{ username }}</span>
+        <a href="{% url 'login' %}">Logout</a>
+    </nav>
+
     <div class="drive-container">
         <div class="item folder" data-name="Documenti">
             <div class="name">Documenti</div>
