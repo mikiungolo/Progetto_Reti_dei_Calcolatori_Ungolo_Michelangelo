@@ -1,3 +1,6 @@
+from datetime import datetime
+
+import pyotp
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
@@ -15,12 +18,14 @@ def redirect_(request):
 def login(request):
     # view that define the business logic of login request
     error_message = None
+
     if request.method == 'POST':
         user = User.objects.filter(username=request.POST.get("username")).first()
         # check hashed password with DB
         if user and check_password(request.POST.get("password"), user.password):
             # define the session
             request.session['username'] = user.username
+
             return redirect("otp")
         else:
             error_message = "Username o password non validi."
@@ -31,6 +36,7 @@ def login(request):
 
 def register(request):
     error_message = None
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if not form.is_valid():
@@ -57,12 +63,39 @@ def register(request):
 def otp(request):
     error_message = None
 
+    if request.method == 'POST':
+        otp_insert = request.POST["code"]
+
+        # get info to session
+        otp_valid_code = request.session["otp_code"]
+        otp_date = request.session["otp_date"]
+
+        # check values
+        if otp_valid_code and otp_date is not None:
+            otp_date = datetime.fromisoformat(otp_date)
+            if otp_date > datetime.now():
+                # validate otp
+                otp_obj = pyotp.TOTP(otp_valid_code, interval = 60)
+                if otp_obj.verify(otp_insert):
+                    # user authenticate
+                    redirect("cloud")
+                    # delete otp informations
+                    del request.session["otp_code"], request.session["otp_date"]
+                else:
+                    error_message = "Codice OTP errato. Reinserisci il codice."
+            else:
+                error_message = "Tempo scauduto. Devi ripetere la procedura di autenticazione."
+        else:
+            error_message = "Ripetere la procedura. C'è qualcosa che non ha funzionato."
+
     return render(request, 'EliteDownload/otp.html',
                   {'title': 'Verifica OTP', 'message': error_message})
 
 
 def cloud(request):
     error_message = None
+
+
 
     return render(request, 'EliteDownload/cloud.html',
                   {'message', error_message})
