@@ -29,7 +29,7 @@ def send_email(otp, to_add):
 
     server_smtp.sendmail(configu.EMAIL_USER, to_add,
                          "Subject: Codice OTP elite-cloud\n\n"
-                         f"Il tuo codice otp è {otp}\n"
+                         f"Il tuo codice otp e' {otp}\n"
                          "Se non hai richiesto il seguente codice OTP da elite-cloud ignora questa mail. ")
 
 

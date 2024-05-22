@@ -81,10 +81,10 @@ def otp(request):
                 # validate otp
                 otp_obj = pyotp.TOTP(otp_valid_code, interval = 60)
                 if otp_obj.verify(otp_insert):
-                    # user authenticate
-                    redirect("cloud")
                     # delete otp informations
                     del request.session["otp_code"], request.session["otp_date"]
+                    # user authenticate
+                    return redirect("cloud")
                 else:
                     error_message = "Codice OTP errato. Reinserisci il codice."
             else:
@@ -99,7 +99,5 @@ def otp(request):
 def cloud(request):
     error_message = None
 
-
-
     return render(request, 'EliteDownload/cloud.html',
-                  {'message', error_message})
+                  {'message': error_message, 'username': request.session["username"]})
