@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect
 
 from .forms import RegistrationForm
 from .models import User
+from .service import send_otp
+
 
 # Create your views here.
 
@@ -24,7 +26,9 @@ def login(request):
         # check hashed password with DB
         if user and check_password(request.POST.get("password"), user.password):
             # define the session
-            request.session['username'] = user.username
+            request.session["username"] = user.username
+            request.session["email"] = user.email
+            send_otp(request)
 
             return redirect("otp")
         else:

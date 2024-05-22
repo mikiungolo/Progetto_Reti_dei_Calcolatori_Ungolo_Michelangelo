@@ -3,6 +3,7 @@
 <form method="post" novalidate>
     {% csrf_token %}
     <h2>Verifica a due fattori</h2>
+    <p class="info">Inserisci il codice OTP ricevuto all'indirizzo email di registrazione.</p>
     <input type="text" placeholder="OPT Code" name="code" maxlength="20" required>
     <button type="submit">Invia</button>
 </form>
