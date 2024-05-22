@@ -17,22 +17,22 @@ body, html {
 }
 
 .form-container {
-    width: 30%; /* Ridimensionato per una migliore estetica */
+    width: 30%;
     padding: 20px;
     background-color: #f7f7f7;
-    border-radius: 10px; /* Aggiunto per bordi arrotondati */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunto ombra per profondità */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 input[type="text"],
-input[type="email"], /* Aggiunto per uniformare lo stile dell'email */
+input[type="email"],
 input[type="password"],
 button {
     width: 100%;
     padding: 15px;
     margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 5px; /* Aggiunto per bordi arrotondati */
+    border-radius: 5px;
     box-sizing: border-box;
 }
 
@@ -50,3 +50,5 @@ button:hover {
 a {
     color: #5cb85c;
 }
+
+.

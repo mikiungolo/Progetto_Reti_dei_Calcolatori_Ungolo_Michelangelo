@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect
 
 from .forms import RegistrationForm
 from .models import User
-# Create your views here.
 
+# Create your views here.
 
 def redirect_(request):
     # at url base it will redirect automatically to login/register url
@@ -14,28 +14,27 @@ def redirect_(request):
 
 def login(request):
     # view that define the business logic of login request
-
+    error_message = None
     if request.method == 'POST':
         user = User.objects.filter(username=request.POST.get("username")).first()
         # check hashed password with DB
         if user and check_password(request.POST.get("password"), user.password):
             # define the session
-            request.session['user_id'] = user.id
-            return render(request, 'EliteDownload/cloud.html',
-                          {'username': user.username})
+            request.session['username'] = user.username
+            return redirect("otp")
         else:
-            return render(request, 'EliteDownload/login.html',
-                          {'error': 'Username o password non validi.'})
+            error_message = "Username o password non validi."
 
-    return render(request, 'EliteDownload/login.html')
+    return render(request, 'EliteDownload/login.html',
+                  {'message': error_message, 'title': 'Login'})
+
 
 def register(request):
-
+    error_message = None
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if not form.is_valid():
-            return render(request, 'EliteDownload/register',
-                          {"error", "Campi errati. Per favore, correggi i campi sottostanti."})
+            error_message = "Campi errati. Per favore, correggi i campi sottostanti."
         else:
             # create a new user: password is hashed
             user = User.objects.create(
@@ -50,7 +49,20 @@ def register(request):
             messages.success(request, "Utente creato. Procedi ora con il login")
             return redirect("login")
 
-    return render(request, 'EliteDownload/register.html')
+    return render(request, 'EliteDownload/register',
+                  {'message', error_message, 'title', 'Registrazione'})
+
+
+# check 2FA after first factor
+def otp(request):
+    error_message = None
+
+    return render(request, 'EliteDownload/otp.html',
+                  {'title': 'Verifica OTP', 'message': error_message})
+
 
 def cloud(request):
-    return render(request, 'EliteDownload/cloud.html')
+    error_message = None
+
+    return render(request, 'EliteDownload/cloud.html',
+                  {'message', error_message})

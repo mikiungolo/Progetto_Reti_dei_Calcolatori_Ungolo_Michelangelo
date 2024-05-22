@@ -5,4 +5,5 @@ urlpatterns = [
     path('login/', views.login, name = "login"),
     path('register/', views.register, name = "register"),
     path('cloud/', views.cloud, name = "cloud"),
+    path('otp/', views.otp, name = "otp"),
 ]

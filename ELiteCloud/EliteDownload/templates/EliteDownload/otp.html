@@ -1,0 +1,9 @@
+{% extends 'EliteDownload/LogRegBase.html' %}
+{% block content %}
+<form method="post" novalidate>
+    {% csrf_token %}
+    <h2>Verifica a due fattori</h2>
+    <input type="text" placeholder="OPT Code" name="code" maxlength="20" required>
+    <button type="submit">Invia</button>
+</form>
+{% endblock %}
