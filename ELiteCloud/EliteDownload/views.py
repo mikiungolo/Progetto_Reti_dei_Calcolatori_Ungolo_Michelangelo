@@ -6,7 +6,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
 
 from .forms import RegistrationForm
-from .models import User
+from .models import User, File
 from .service import send_otp
 
 
@@ -20,6 +20,9 @@ def redirect_(request):
 def login(request):
     # view that define the business logic of login request
     error_message = None
+
+    if ("username" and "email") in request.session:
+        del request.session["username"], request.session["email"]
 
     if request.method == 'POST':
         user = User.objects.filter(username=request.POST.get("username")).first()
@@ -96,8 +99,15 @@ def otp(request):
                   {'title': 'Verifica OTP', 'message': error_message})
 
 
+# cloud view shows files in DB
 def cloud(request):
-    error_message = None
 
+    cloud = File.objects.all()
     return render(request, 'EliteDownload/cloud.html',
-                  {'message': error_message, 'username': request.session["username"]})
+                  {'username': request.session["username"], 'cloud': cloud})
+
+
+# business logic for download request file
+def download(request, file_id):
+
+    pass

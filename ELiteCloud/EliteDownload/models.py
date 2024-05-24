@@ -23,12 +23,11 @@ class User(models.Model):
 
 # File Model to track download
 class File(models.Model):
-    identifier = models.CharField(max_length = CHAR_FIELD_LENGHT)
-    extension = models.CharField(max_length = CHAR_EXTENSION_LENGHT)
-    users = models.ManyToManyField(User, related_name = "files")
+    file = models.FileField(upload_to = 'files/')
+    date_upload = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return self.identifier.name + '.' + self.extension.name
+        return self.file.name
 
     class Meta:
         verbose_name = "file"

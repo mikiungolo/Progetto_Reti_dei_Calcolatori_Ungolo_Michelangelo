@@ -8,20 +8,20 @@
     <link rel="stylesheet" href=" {% static 'EliteDownload/cloud/cloudStyle.css' %} ">
 </head>
 <body>
+    {% if username %}
     <nav class="user">
         <span> Loggato come {{ username }}</span>
         <a href="{% url 'login' %}">Logout</a>
     </nav>
 
     <div class="drive-container">
-        <div class="item folder" data-name="Documenti">
-            <div class="name">Documenti</div>
-            <div class="download">Scarica</div>
-        </div>
-        <div class="item file" data-name="Presentazione.pptx">
-            <div class="name">Presentazione.pptx</div>
-            <div class="download">Scarica</div>
-        </div>
+        {% for file in cloud %}
+            <div class="item file" data-name="{{ file.name }}">
+                <div class="name">{{ file.name }}.pptx</div>
+                <a href="{% url 'download' file.id %}" class="download">Scarica</a>
+            </div>
+        {% endfor %}
     </div>
+    {% endif %}
 </body>
 </html>
