@@ -3,7 +3,8 @@ from datetime import datetime
 import pyotp
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
-from django.shortcuts import render, redirect
+from django.http import FileResponse
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import RegistrationForm
 from .models import User, File
@@ -109,5 +110,11 @@ def cloud(request):
 
 # business logic for download request file
 def download(request, file_id):
-
-    pass
+    # get info of selected path and its path
+    file = get_object_or_404(File, pk = file_id)
+    file_path = file.file.path
+    # open file in read mode and assign Content for downlaod
+    response = FileResponse(open(file_path, "rb"))
+    response["Content-Type"] = "application/octet-stream"
+    response["Content-Disposition"] = f'attachment; filename="{file.name}"'
+    return response

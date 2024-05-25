@@ -1,3 +1,5 @@
+import os.path
+
 from django.db import models
 
 # Create your models here.
@@ -26,8 +28,12 @@ class File(models.Model):
     file = models.FileField(upload_to = 'files/')
     date_upload = models.DateTimeField(auto_now_add = True)
 
+    @property
+    def name(self):
+        return os.path.basename(self.file.name)
+
     def __str__(self):
-        return self.file.name
+        return self.name
 
     class Meta:
         verbose_name = "file"

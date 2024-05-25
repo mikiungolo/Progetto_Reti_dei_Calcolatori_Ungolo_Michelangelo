@@ -17,7 +17,7 @@
     <div class="drive-container">
         {% for file in cloud %}
             <div class="item file" data-name="{{ file.name }}">
-                <div class="name">{{ file.name }}.pptx</div>
+                <div class="name">{{ file.name }}</div>
                 <a href="{% url 'download' file.id %}" class="download">Scarica</a>
             </div>
         {% endfor %}
