@@ -1,7 +1,6 @@
 from datetime import datetime
 
 import pyotp
-from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import FileResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -16,7 +15,6 @@ from .service import send_otp
 def redirect_(request):
     # at url base it will redirect automatically to login/register url
     return redirect("login")
-
 
 def login(request):
     # view that define the business logic of login request
