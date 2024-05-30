@@ -51,25 +51,31 @@ def register(request):
             error_message = "Campi errati. Per favore, correggi i campi sottostanti."
         else:
             username = request.POST.get("username")
-            user = User.objects.filter(username = username)
-            if not user:
-                # create a new user: password is hashed
-                user = User.objects.create(
-                    username = request.POST.get("username"),
-                    name = request.POST.get("name"),
-                    surname = request.POST.get("surname"),
-                    password = make_password(request.POST.get("password")),
-                    email = request.POST.get("email"),
-                )
-                # save new User into DB
-                user.save()
-                messages.success(request, "Utente creato. Procedi ora con il login")
-                return redirect("login")
-            else:
-                messages.error(request, "Username già esistente. Digitare un nuovo username.")
+            email = request.POST.get("email")
+            user_ex_username = User.objects.filter(username = username).first()
+            user_ex_email = User.objects.filter(email=email).first()
 
-    return render(request, 'EliteDownload/register',
-                  {'message', error_message, 'title', 'Registrazione'})
+            if not user_ex_email:
+                if not user_ex_username:
+                    # create a new user: password is hashed
+                    user = User.objects.create(
+                        username = username,
+                        name = request.POST.get("name"),
+                        surname = request.POST.get("surname"),
+                        password = make_password(request.POST.get("password")),
+                        email = email,
+                    )
+                    # save new User into DB
+                    user.save()
+                    error_message = "Utente creato. Procedi ora con il login"
+                    return redirect("login")
+                else:
+                    error_message = "Username già esistente. Digitare un nuovo username."
+            else:
+                error_message = "Email già presente. Digitare una mail diversa."
+
+    return render(request, 'EliteDownload/register.html',
+                  {'message': error_message, 'title': 'Registrazione'})
 
 
 # check 2FA after first factor
