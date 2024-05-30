@@ -50,18 +50,23 @@ def register(request):
         if not form.is_valid():
             error_message = "Campi errati. Per favore, correggi i campi sottostanti."
         else:
-            # create a new user: password is hashed
-            user = User.objects.create(
-                username = request.POST.get("username"),
-                name = request.POST.get("name"),
-                surname = request.POST.get("surname"),
-                password = make_password(request.POST.get("password")),
-                email = request.POST.get("email"),
-            )
-            # save new User into DB
-            user.save()
-            messages.success(request, "Utente creato. Procedi ora con il login")
-            return redirect("login")
+            username = request.POST.get("username")
+            user = User.objects.filter(username = username)
+            if not user:
+                # create a new user: password is hashed
+                user = User.objects.create(
+                    username = request.POST.get("username"),
+                    name = request.POST.get("name"),
+                    surname = request.POST.get("surname"),
+                    password = make_password(request.POST.get("password")),
+                    email = request.POST.get("email"),
+                )
+                # save new User into DB
+                user.save()
+                messages.success(request, "Utente creato. Procedi ora con il login")
+                return redirect("login")
+            else:
+                messages.error(request, "Username già esistente. Digitare un nuovo username.")
 
     return render(request, 'EliteDownload/register',
                   {'message', error_message, 'title', 'Registrazione'})
